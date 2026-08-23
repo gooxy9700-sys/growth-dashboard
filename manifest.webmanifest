@@ -1,0 +1,12 @@
+{
+  "name": "与己书",
+  "short_name": "与己书",
+  "description": "个人成长工具：任务、专注、训练与周复盘。",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f2f5f3",
+  "theme_color": "#0f766e",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
