@@ -12,7 +12,7 @@
 | 统计 | 已实现 | 日/周/月、ECharts 优先与 Canvas 回退、实际专注分钟占比、体重和活动趋势、月度目标状态。 |
 | PWA 与静态交付 | 已实现 | Manifest、Service Worker、隐私页、部署文档均在本地 HTTP 200 验证。 |
 | GitHub 仓库推送 | 已实现 | `https://github.com/gooxy9700-sys/kaoyan-growth-dashboard`，`main` 与 `codex/growth-planner-pwa` 已推送。 |
-| GitHub Pages 发布 | 待仓库设置确认 | 预期地址 `https://gooxy9700-sys.github.io/kaoyan-growth-dashboard/`；需在 Settings → Pages 选择 GitHub Actions。 |
+| GitHub Pages 发布 | 已实现 | `https://gooxy9700-sys.github.io/growth-dashboard/`、`manifest.webmanifest` 和公开 workflow 均已 HTTP 200 验证；目录真实名称为 `.github/workflows`。 |
 | Supabase 代码接入 | 已实现 | 邮箱注册/登录/重置、RLS 快照、离线本地优先、联网重试、Realtime 订阅、最后写入优先。 |
-| Supabase 真实验收 | 待外部配置 | 需要填写 `supabase-config.js`，执行 `supabase-schema.sql`，再验证邮箱、RLS 和至少两台设备。 |
+| Supabase 真实验收 | 部分完成 | 项目表、RLS、Realtime、publishable key 和已登录同步已确认；线上注册/邮箱确认/密码重置仍需确认 Redirect URL 并完成闭环测试。 |
 | 华为 Health Kit | 预留接口 | `health-kit-adapter.js` 仅定义适配边界，MVP 不请求任何第三方健康数据。 |
