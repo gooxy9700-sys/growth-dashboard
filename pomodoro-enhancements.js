@@ -135,7 +135,7 @@
       list.dataset.checkProxy = "1";
       list.addEventListener("click", (event) => {
         const label = event.target.closest(".schedule-check");
-        if (!label || event.target.matches("input")) return;
+        if (!label) return;
         const input = label.querySelector("input");
         if (!input) return;
         event.preventDefault();
