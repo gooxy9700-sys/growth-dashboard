@@ -1,7 +1,18 @@
 (() => {
   "use strict";
+  const POMODORO_STORAGE_KEY = "yijishu-pomodoro-v1";
   const app = window.YIJISHU_APP;
-  if (!app) return;
+  if (!app) {
+    const current = document.currentScript?.src || "";
+    if (!current.includes("pomodoro-retry=1")) {
+      window.setTimeout(() => {
+        const retry = document.createElement("script");
+        retry.src = current + (current.includes("?") ? "&" : "?") + "pomodoro-retry=1";
+        document.head.append(retry);
+      }, 0);
+    }
+    return;
+  }
   let state = app.getState();
   state.ui = state.ui || {};
   if (!state.settings.pomodoroDefaultsMigrated && state.settings.focusMinutes === 50 && state.settings.breakMinutes === 10) {
@@ -11,6 +22,21 @@
     app.saveState();
   }
   state.ui.focusMode = Boolean(state.ui.focusMode);
+  function restorePomodoroSessions() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(POMODORO_STORAGE_KEY) || "null");
+      const sessions = Array.isArray(cached?.sessions) ? cached.sessions : [];
+      const known = new Set((state.focusSessions || []).map((item) => item.id));
+      let restored = false;
+      sessions.forEach((item) => { if (item?.id && !known.has(item.id)) { state.focusSessions.push(item); restored = true; } });
+      if (restored) app.saveState();
+    } catch { /* Invalid independent focus cache should not block the dashboard. */ }
+  }
+  function persistPomodoroSessions() {
+    const sessions = (state.focusSessions || []).filter((item) => item.pomodoros != null || item.completedPomodoros != null || item.timer === "pomodoro");
+    localStorage.setItem(POMODORO_STORAGE_KEY, JSON.stringify({ version: 1, updatedAt: Date.now(), sessions }));
+  }
+  restorePomodoroSessions();
   const q = (selector) => document.querySelector(selector);
   const byId = (id) => document.getElementById(id);
   const escText = (value) => String(value == null ? "" : value).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
@@ -81,7 +107,19 @@
     article.innerHTML = '<div class="schedule-card-time">' + escText(item.start) + ' - ' + escText(item.end) + '</div>' +
       '<div class="schedule-body"><div class="schedule-title-row"><h3>' + escText(item.title) + '</h3><span class="schedule-tag">' + escText(labelFor(item.type)) + '</span>' + (count ? '<span class="pomodoro-count" title="今日已完成番茄">🍅 ' + count + '</span>' : '') + '</div><p>' + escText(item.detail) + '</p></div>' +
       '<div class="schedule-item-actions"><label class="schedule-check" title="标记完成"><input type="checkbox" ' + (item.done ? 'checked' : '') + ' aria-label="完成 ' + escText(item.title) + '"></label>' + (item.rigid ? '' : '<button type="button" class="schedule-focus-button" title="启动番茄钟" aria-label="为' + escText(item.title) + '启动番茄钟">🍅</button>') + '</div>';
-    article.querySelector("input").addEventListener("change", (event) => { if (app.toggleScheduleDone) app.toggleScheduleDone(item, event.target.checked); save(); render(); });
+    article.querySelector("input").addEventListener("change", (event) => {
+      const checked = event.target.checked;
+      const allState = app.getState();
+      if (String(item.id).startsWith("schedule-")) {
+        const key = item.id.replace("schedule-" + item.date + "-", "");
+        allState.scheduleOverrides[item.date + "-" + key] = { ...(allState.scheduleOverrides[item.date + "-" + key] || {}), done: checked };
+      } else item.done = checked;
+      save();
+      if (checked) {
+        article.classList.add("is-done", "is-celebrating");
+        setTimeout(render, 260);
+      } else { render(); }
+    });
     const start = article.querySelector(".schedule-focus-button");
     if (start) start.addEventListener("click", (event) => { event.stopPropagation(); openForSchedule(item); });
     return article;
@@ -93,6 +131,18 @@
     const items = scheduleItemsFor(day());
     list.className = "schedule-list schedule-agenda";
     list.replaceChildren.apply(list, items.map(card));
+    if (!list.dataset.checkProxy) {
+      list.dataset.checkProxy = "1";
+      list.addEventListener("click", (event) => {
+        const label = event.target.closest(".schedule-check");
+        if (!label || event.target.matches("input")) return;
+        const input = label.querySelector("input");
+        if (!input) return;
+        event.preventDefault();
+        input.checked = !input.checked;
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+    }
     if (byId("schedule-date-title")) byId("schedule-date-title").textContent = format(day()) + " · 今日安排";
     if (byId("schedule-empty")) byId("schedule-empty").hidden = items.length > 0;
     customRenderProgress();
@@ -162,9 +212,22 @@
     overlay.querySelector("#pomodoro-overlay-mode").textContent = state.ui.focusMode ? "退出专注模式" : "进入专注模式";
   }
   function openForSchedule(item) { pomTimer.taskId = item.id; pomTimer.taskTitle = item.title; pomTimer.category = item.type; pomTimer.mode = "focus"; pomTimer.total = Number(state.settings.focusMinutes || 25) * 60; pomTimer.remaining = pomTimer.total; pomTimer.startedAt = 0; const overlay = ensureOverlay(); overlay.hidden = false; renderOverlay(); }
-  function record(minutes, completed) { if (!minutes) return; const task = state.tasks.find((item) => item.id === pomTimer.taskId); state.focusSessions.push({ id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), date: new Date().toISOString().slice(0, 10), taskId: pomTimer.taskId, title: pomTimer.taskTitle || task && task.title || "未关联任务", category: task && task.category || pomTimer.category || "未分类", minutes: minutes, pomodoros: completed ? 1 : 0, endedAt: Date.now() }); save(); }
-  function softTone(frequency) { if (!state.settings.whiteNoise || !window.AudioContext) return; const context = new AudioContext(); const oscillator = context.createOscillator(); const gain = context.createGain(); oscillator.frequency.value = frequency; gain.gain.setValueAtTime(0.0001, context.currentTime); gain.gain.exponentialRampToValueAtTime(0.025, context.currentTime + 0.03); gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.28); oscillator.connect(gain).connect(context.destination); oscillator.start(); oscillator.stop(context.currentTime + 0.3); }
-  function runTimer() { pomTimer.running = true; pomTimer.handle = setInterval(() => { pomTimer.remaining -= 1; if (pomTimer.remaining <= 0) finishRound(); else updateClock(); }, 1000); updateClock(); }
+  function record(minutes, completed) { if (!minutes) return; const task = state.tasks.find((item) => item.id === pomTimer.taskId); state.focusSessions.push({ id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()), date: new Date().toISOString().slice(0, 10), taskId: pomTimer.taskId, title: pomTimer.taskTitle || task && task.title || "未关联任务", category: task && task.category || pomTimer.category || "未分类", minutes: minutes, pomodoros: completed ? 1 : 0, timer: "pomodoro", endedAt: Date.now() }); persistPomodoroSessions(); save(); }
+  let audioContext = null;
+  function tone(frequency, volume, duration) {
+    if (!state.settings.whiteNoise || !window.AudioContext) return;
+    audioContext = audioContext || new AudioContext();
+    if (audioContext.state === "suspended") audioContext.resume();
+    const oscillator = audioContext.createOscillator(); const gain = audioContext.createGain();
+    oscillator.type = "sine"; oscillator.frequency.value = frequency;
+    gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(volume, audioContext.currentTime + 0.018);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+    oscillator.connect(gain).connect(audioContext.destination); oscillator.start(); oscillator.stop(audioContext.currentTime + duration + 0.02);
+  }
+  function softTone(frequency) { tone(frequency, 0.025, 0.28); }
+  function softTick() { tone(pomTimer.mode === "break" ? 440 : 520, 0.006, 0.055); }
+  function runTimer() { pomTimer.running = true; pomTimer.handle = setInterval(() => { pomTimer.remaining -= 1; if (pomTimer.remaining <= 0) finishRound(); else { softTick(); updateClock(); } }, 1000); updateClock(); }
   function finishRound() { const wasFocus = pomTimer.mode === "focus"; clearInterval(pomTimer.handle); pomTimer.handle = null; pomTimer.running = false; if (wasFocus) { record(Number(state.settings.focusMinutes || 25), true); pomTimer.mode = "break"; pomTimer.total = Number(state.settings.breakMinutes || 5) * 60; pomTimer.remaining = pomTimer.total; pomTimer.startedAt = Date.now(); softTone(660); if (app.showToast) app.showToast("番茄完成，已自动开始休息"); runTimer(); } else { pomTimer.mode = "focus"; pomTimer.total = Number(state.settings.focusMinutes || 25) * 60; pomTimer.remaining = pomTimer.total; pomTimer.startedAt = 0; softTone(880); if (app.showToast) app.showToast("休息结束，可以继续专注"); updateClock(); } customRenderFocus(); customRenderSchedule(); }
   function start() { if (pomTimer.running) return; const select = byId("focus-task-select"); if (select && select.value) pomTimer.taskId = select.value; if (!pomTimer.taskTitle) { const found = scheduleItemsFor(day()).find((item) => item.id === pomTimer.taskId) || state.tasks.find((item) => item.id === pomTimer.taskId); pomTimer.taskTitle = found && found.title || "未关联任务"; pomTimer.category = found && (found.type || found.category) || "未分类"; } pomTimer.startedAt = Date.now(); runTimer(); }
   function pause() { clearInterval(pomTimer.handle); pomTimer.handle = null; pomTimer.running = false; updateClock(); }
