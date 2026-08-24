@@ -7,6 +7,25 @@
 @media(max-width:900px){.workspace{padding-bottom:calc(70px + env(safe-area-inset-bottom))}.sidebar{padding-bottom:calc(7px + env(safe-area-inset-bottom))}.sync-status{font-size:11px;color:var(--muted);padding:0 4px;white-space:nowrap}}
 @media(max-width:560px){.brand{font-size:16px;gap:7px}.brand-mark{width:27px;height:27px}.sync-status{display:none}}
 
+/* Mobile utility bar and form density: keep controls reachable without squeezing content. */
+@media(max-width:560px){
+  .topbar{height:auto;min-height:58px;display:grid;grid-template-columns:auto minmax(0,1fr);row-gap:7px;padding:9px 12px 8px;align-items:center}
+  .topbar-actions{grid-column:1 / -1;width:100%;min-width:0;overflow-x:auto;justify-content:flex-start;gap:3px;padding-bottom:1px;scrollbar-width:none}
+  .topbar-actions::-webkit-scrollbar{display:none}
+  .topbar-actions .text-button{flex:0 0 auto;min-height:34px;padding:7px 9px;white-space:nowrap}
+  .view{padding-top:17px;padding-bottom:42px}
+  .workspace{padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+  .sidebar{padding-top:6px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+  .nav-button{min-height:42px}
+  .panel{padding:16px}
+  .exercise-list{gap:12px}
+  .exercise-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:8px 7px;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fbfcfc}
+  .exercise-row .remove-exercise{grid-column:3;grid-row:1;align-self:end;width:32px;height:39px;padding:0}
+  .exercise-row label:nth-child(3),.exercise-row label:nth-child(4){grid-row:2}
+  .exercise-row label{min-width:0}
+  .toast{bottom:calc(92px + env(safe-area-inset-bottom));max-width:calc(100vw - 28px);text-align:center}
+}
+
 .plan-control-panel{margin-bottom:16px;background:#f8fbff;border-color:#c8dce8}.plan-control-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.plan-controls{display:grid;grid-template-columns:minmax(180px,1fr) minmax(180px,1fr) auto;gap:12px;align-items:end;margin-top:16px}.status-pill.is-formal{border-color:#a8c9b2;background:#edf8ef;color:#2d6a3f}
 .focus-presets{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}.focus-preset{min-height:36px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted);font-weight:750}.focus-preset:hover{border-color:var(--teal);color:var(--teal-dark);background:#edf8f6}
 .weight-panel{margin-top:16px}.weight-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-top:16px}.task-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.task-actions button{border:0;border-radius:5px;padding:7px 9px;color:var(--teal-dark);background:#edf8f6;font-size:12px;font-weight:750}.task-actions .danger-action{color:var(--red);background:#fff2f0}
