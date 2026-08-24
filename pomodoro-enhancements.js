@@ -39,6 +39,17 @@
     localStorage.setItem(POMODORO_STORAGE_KEY, JSON.stringify({ version: 1, updatedAt: Date.now(), sessions }));
   }
   restorePomodoroSessions();
+  const baseRenderAll = app.renderAll;
+  if (typeof baseRenderAll === "function" && !app.__tomatoRenderPatched) {
+    app.__tomatoRenderPatched = true;
+    app.renderAll = (...args) => { const result = baseRenderAll(...args); render(); return result; };
+  }
+  const baseShowView = app.showView;
+  if (typeof baseShowView === "function" && !app.__tomatoShowViewPatched) {
+    app.__tomatoShowViewPatched = true;
+    app.showView = (...args) => { const result = baseShowView(...args); render(); return result; };
+  }
+  document.querySelectorAll(".nav-button").forEach((button) => button.addEventListener("click", () => window.setTimeout(render, 0), true));
   const q = (selector) => document.querySelector(selector);
   const byId = (id) => document.getElementById(id);
   const escText = (value) => String(value == null ? "" : value).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
