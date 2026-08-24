@@ -20,8 +20,11 @@
   .panel{padding:16px}
   .exercise-list{gap:12px}
   .exercise-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:8px 7px;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fbfcfc}
+  .exercise-row label:first-child{grid-column:1 / span 2;grid-row:1}
+  .exercise-row label:nth-child(2){grid-column:1;grid-row:2}
+  .exercise-row label:nth-child(3){grid-column:2;grid-row:2}
+  .exercise-row label:nth-child(4){grid-column:1 / span 2;grid-row:3}
   .exercise-row .remove-exercise{grid-column:3;grid-row:1;align-self:end;width:32px;height:39px;padding:0}
-  .exercise-row label:nth-child(3),.exercise-row label:nth-child(4){grid-row:2}
   .exercise-row label{min-width:0}
   .toast{bottom:calc(92px + env(safe-area-inset-bottom));max-width:calc(100vw - 28px);text-align:center}
 }
@@ -40,3 +43,4 @@
 /* Low-saturation blue palette for long study sessions. */
 :root{--ink:#1d2d3a;--muted:#64798a;--line:#d7e2e9;--ground:#f3f7fa;--teal:#4d7f9f;--teal-dark:#315f7d;--blue:#3f7ea5}
 .sidebar{background:#eef4f7}.summary-main,.nav-button:hover,.nav-button.is-active{background:#edf5fa;border-color:#c8dae5}.progress-track{background:#d8e8f1}.progress-track i,.mini-track i{background:var(--teal)}.primary-button{border-color:var(--teal);background:var(--teal)}.primary-button:hover{background:var(--teal-dark)}.task-action button,.task-actions button,.focus-preset:hover{background:#edf5fa;color:var(--teal-dark)}.status-pill{border-color:#c8dae5;background:#edf5fa;color:var(--teal-dark)}.split-tab.is-active{border-color:var(--teal);background:#edf5fa;color:var(--teal-dark)}.sync-status{color:var(--muted)}
+@media(max-width:560px){.topbar-actions{width:100%;max-width:none;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto}.exercise-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:8px 7px;padding:10px;border:1px solid var(--line);border-radius:7px;background:#fbfcfc}.exercise-row label:first-child{grid-column:1 / span 2;grid-row:1}.exercise-row label:nth-child(2){grid-column:1;grid-row:2}.exercise-row label:nth-child(3){grid-column:2;grid-row:2}.exercise-row label:nth-child(4){grid-column:1 / span 2;grid-row:3}.exercise-row .remove-exercise{grid-column:3;grid-row:1;align-self:end;width:32px;height:39px;padding:0}}
