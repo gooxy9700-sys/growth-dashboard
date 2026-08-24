@@ -21,7 +21,9 @@
     state.settings.pomodoroDefaultsMigrated = true;
     app.saveState();
   }
-  state.ui.focusMode = Boolean(state.ui.focusMode);
+  // A reload cannot resume an in-memory timer, so never leave the page locked behind a stale focus mask.
+  state.ui.focusMode = false;
+  app.saveState();
   function restorePomodoroSessions() {
     try {
       const cached = JSON.parse(localStorage.getItem(POMODORO_STORAGE_KEY) || "null");
