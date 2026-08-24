@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0f766e">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=15">
+  <link rel="stylesheet" href="styles.css?v=16">
   <title>与己书 · 自律成长工具</title>
 </head>
 <body>
@@ -22,7 +22,8 @@
       </aside>
 
       <section id="tasks-view" class="view is-visible" aria-labelledby="tasks-title">
-        <div class="view-heading dashboard-heading"><div><p class="eyebrow">考研成长自律看板</p><h1 id="tasks-title">今日安排</h1></div><div class="heading-actions"><button id="new-task-button" class="primary-button" type="button">新增弹性事项</button></div></div>
+        <div class="view-heading dashboard-heading"><div><p class="eyebrow">考研成长自律看板</p><h1 id="tasks-title">今日安排</h1><strong id="mobile-day-title" class="mobile-day-title">第 0 周 周一</strong></div><div class="heading-actions"><button id="new-task-button" class="primary-button" type="button" aria-label="新增弹性事项"><span class="new-task-plus" aria-hidden="true">+</span><span class="new-task-label">新增弹性事项</span></button></div></div>
+        <section class="mobile-day-status" aria-live="polite"><div class="mobile-status-mark" aria-hidden="true">✓</div><div><strong id="mobile-day-status">今日待完成</strong><span id="mobile-day-count">正在整理今天的个人课程</span></div></section>
         <section class="week-strip panel" aria-label="周日期导航"><div id="week-days" class="week-days"></div></section>
         <section class="weekly-progress" aria-label="本周模块进度"><article class="module-progress"><div><span>数学</span><strong id="week-math-progress">0%</strong></div><div class="progress-track"><i id="week-math-bar"></i></div></article><article class="module-progress"><div><span>英语</span><strong id="week-english-progress">0%</strong></div><div class="progress-track"><i id="week-english-bar"></i></div></article><article class="module-progress"><div><span>运动</span><strong id="week-sport-progress">0%</strong></div><div class="progress-track"><i id="week-sport-bar"></i></div></article></section>
         <section class="schedule-panel panel"><div class="panel-heading"><div><p class="eyebrow">周课程表</p><h2 id="schedule-date-title">07:00 - 23:30</h2></div><span id="schedule-completion" class="status-pill">完成率 0%</span></div><div id="schedule-list" class="schedule-list" aria-label="周课程表"></div></section>
@@ -53,7 +54,7 @@
   <script src="supabase-config.js?v=1" defer></script>
   <script src="schedule-data.js?v=1" defer></script>
   <script src="plan-data.js?v=1" defer></script>
-  <script src="app.js?v=16" defer></script>
+  <script src="app.js?v=17" defer></script>
   <script src="health-kit-adapter.js?v=1" defer></script>
   <script src="sync.js?v=2" defer></script>
 </body>
