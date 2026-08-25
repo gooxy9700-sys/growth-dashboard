@@ -132,6 +132,31 @@ body[data-current-view="tasks"] .dashboard-overview{margin-top:0}
 @media(min-width:701px) and (max-width:1180px){.dashboard-overview{grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.board-module{min-height:116px;padding:11px}.board-module strong{font-size:14px}.board-module b{font-size:17px}.board-module span:not(.board-module-kicker){font-size:11px}.view{padding:18px 20px 56px}body[data-current-view="tasks"] .workspace{padding-bottom:0}body[data-current-view="tasks"] #tasks-view{max-width:none}.dashboard-overview{margin-bottom:9px}}
 @media(max-width:700px){.topbar{background:var(--morandi-paper)}.workspace{padding-bottom:calc(76px + env(safe-area-inset-bottom))}.sidebar{display:grid}.view{padding:14px 11px 30px}.dashboard-heading{margin-bottom:9px}.dashboard-heading h1{font-size:21px}.dashboard-overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:9px}.board-module{min-height:106px;padding:11px;border-radius:8px}.board-module-today{grid-column:1/-1;min-height:92px}.board-module strong{font-size:15px}.board-module b{font-size:17px}.board-module span:not(.board-module-kicker){font-size:11px}.board-module-kicker{font-size:9px}.week-strip{margin-bottom:8px}.weekly-progress{margin-bottom:8px}.schedule-panel{padding:12px}.schedule-list.schedule-agenda .schedule-item{min-height:70px;padding:9px}.note-panel,.plan-control-panel,.task-panel,.timeline-panel{margin-top:8px}}
 @media(prefers-reduced-motion:reduce){.board-module{transition:none}.board-module:hover{transform:none}}
+
+/* Desktop-only expandable board. Touch layouts stay on the existing compact grid until the desktop art direction is approved. */
+@media(min-width:1181px){
+  body[data-current-view="tasks"] .dashboard-overview{grid-template-columns:minmax(620px,2.8fr) repeat(4,minmax(76px,.48fr));gap:8px;min-height:216px;transition:grid-template-columns 360ms cubic-bezier(.2,.8,.2,1)}
+  body[data-current-view="tasks"] .dashboard-overview:has(.board-module-focus.is-current){grid-template-columns:minmax(76px,.48fr) minmax(620px,2.8fr) repeat(3,minmax(76px,.48fr))}
+  body[data-current-view="tasks"] .dashboard-overview:has(.board-module-run.is-current){grid-template-columns:repeat(2,minmax(76px,.48fr)) minmax(620px,2.8fr) repeat(2,minmax(76px,.48fr))}
+  body[data-current-view="tasks"] .dashboard-overview:has(.board-module-gym.is-current){grid-template-columns:repeat(3,minmax(76px,.48fr)) minmax(620px,2.8fr) minmax(76px,.48fr)}
+  body[data-current-view="tasks"] .dashboard-overview:has(.board-module-stats.is-current){grid-template-columns:repeat(4,minmax(76px,.48fr)) minmax(620px,2.8fr)}
+  .dashboard-overview .board-module{min-height:216px;padding:18px 16px;border-radius:12px;grid-template-rows:auto auto 1fr auto;align-content:stretch;transition:min-height 320ms ease,transform 220ms ease,box-shadow 220ms ease,filter 220ms ease}
+  .dashboard-overview .board-module:not(.is-current){min-height:216px;padding:18px 10px;justify-items:center;align-content:center;filter:saturate(.78)}
+  .dashboard-overview .board-module:not(.is-current) .board-module-kicker,.dashboard-overview .board-module:not(.is-current) span:not(.board-module-kicker),.dashboard-overview .board-module:not(.is-current) b,.dashboard-overview .board-module:not(.is-current) .board-module-detail,.dashboard-overview .board-module:not(.is-current) .board-module-mark{display:none}
+  .dashboard-overview .board-module:not(.is-current) strong{font-size:16px;white-space:nowrap;writing-mode:vertical-rl;letter-spacing:.08em}
+  .dashboard-overview .board-module.is-current{padding:20px 22px;border-color:rgba(62,70,67,.42);box-shadow:0 12px 26px rgba(62,70,67,.14),inset 0 -4px rgba(62,70,67,.24);transform:translateY(-2px)}
+  .dashboard-overview .board-module.is-current strong{font-size:28px;letter-spacing:.01em}
+  .dashboard-overview .board-module.is-current span:not(.board-module-kicker){font-size:14px}
+  .dashboard-overview .board-module.is-current b{font-size:38px;align-self:end}
+  .dashboard-overview .board-module-detail{display:flex;align-items:end;justify-content:space-between;gap:18px;padding-top:14px;border-top:1px solid rgba(62,70,67,.18);font-size:13px;color:rgba(62,70,67,.72)}
+  .dashboard-overview .board-module-detail em{max-width:260px;font-style:normal;line-height:1.45}
+  .board-module-action{min-height:38px;padding:8px 12px;border:1px solid rgba(62,70,67,.25);border-radius:6px;background:rgba(255,255,255,.26);color:var(--morandi-ink);font:inherit;font-size:12px;font-weight:800;white-space:nowrap;cursor:pointer;transition:background 160ms ease,transform 160ms ease}
+  .board-module-action:hover{background:rgba(255,255,255,.55)}.board-module-action:active{transform:scale(.97)}
+  .dashboard-overview .board-module.is-current .board-module-mark{width:150px;height:150px;right:-34px;bottom:-50px;border-width:22px;opacity:.72}
+  .dashboard-overview .board-module:not(.is-current):hover{transform:translateY(-1px);box-shadow:0 7px 16px rgba(62,70,67,.09)}
+}
+@media(min-width:1181px) and (max-width:1320px){body[data-current-view="tasks"] .dashboard-overview{grid-template-columns:minmax(500px,2.3fr) repeat(4,minmax(68px,.45fr))}.dashboard-overview .board-module.is-current strong{font-size:24px}.dashboard-overview .board-module.is-current b{font-size:32px}.dashboard-overview .board-module-detail em{max-width:180px}}
+@media(prefers-reduced-motion:reduce){.dashboard-overview{transition:none!important}.dashboard-overview .board-module{transition:none!important}.dashboard-overview .board-module.is-current{transform:none}}
 @media(min-width:701px) and (max-width:1180px){
   .workspace{padding-bottom:calc(76px + env(safe-area-inset-bottom))}.view{padding-bottom:calc(100px + env(safe-area-inset-bottom))}.sidebar{min-height:calc(68px + env(safe-area-inset-bottom));padding-bottom:max(7px, env(safe-area-inset-bottom))}.nav-button{min-height:52px}.plan-controls{grid-template-columns:1fr 1fr}.plan-controls .secondary-button{grid-column:1 / -1}.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.summary-main{grid-column:1 / -1}
 }
