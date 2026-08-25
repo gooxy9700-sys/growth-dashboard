@@ -58,17 +58,17 @@ const EXCEL_DAILY_SCHEDULE = {
 };
 
 // 真实秋季课表：扫描课表已核验的上课节次与教学周。
-// 课程名称、教室和分组实验以开学后的教务系统与教师通知为准。
+// 教室、分组实验和晚间例外仍以教务系统与教师通知为准。
 const AUTUMN_COURSE_SCHEDULE = [
-  { id: "mon-morning", day: 1, start: "08:00", end: "09:35", weeks: [1, 16], title: "校内课程（第 1-2 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；课程名/教室待教务系统核对。" },
-  { id: "mon-afternoon", day: 1, start: "13:30", end: "16:55", weeks: [1, 16], title: "校内课程（第 5-8 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；课程名/教室待教务系统核对。" },
-  { id: "tue-morning", day: 2, start: "08:00", end: "11:45", weeks: [1, 16], title: "校内课程（第 1-4 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；下午通常无正式课程。" },
-  { id: "wed-morning", day: 3, start: "08:00", end: "09:35", weeks: [1, 16], title: "校内课程（第 1-2 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；课程名/教室待教务系统核对。" },
-  { id: "wed-afternoon", day: 3, start: "13:30", end: "16:55", weeks: [1, 16], title: "校内课程（第 5-8 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；课程名/教室待教务系统核对。" },
-  { id: "thu-late-morning", day: 4, start: "09:50", end: "11:45", weeks: [1, 16], title: "校内课程（第 3-4 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；上午第 1-2 节通常无正式课程。" },
-  { id: "thu-afternoon", day: 4, start: "13:30", end: "16:55", weeks: [1, 16], title: "校内课程（第 5-8 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；课程名/教室待教务系统核对。" },
-  { id: "fri-morning", day: 5, start: "08:00", end: "11:45", weeks: [1, 16], title: "校内课程（第 1-4 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；课程名/教室待教务系统核对。" },
-  { id: "fri-late-afternoon", day: 5, start: "15:20", end: "16:55", weeks: [1, 16], title: "校内课程（第 7-8 节）", detail: "真实课表刚性占用 · 第 1-16 教学周；课程名/教室待教务系统核对。" },
+  { id: "mon-morning", day: 1, start: "08:00", end: "09:35", weeks: [1, 16], title: "液压传动 + 创业基础", detail: "第 1-2 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
+  { id: "mon-afternoon", day: 1, start: "13:30", end: "16:55", weeks: [1, 16], title: "机械设计", detail: "第 5-8 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
+  { id: "tue-morning", day: 2, start: "08:00", end: "11:45", weeks: [1, 16], title: "机械控制工程基础 + 公差与测量技术", detail: "第 1-4 节 · 第 1-16 教学周；下午通常无正式课程。" },
+  { id: "wed-morning", day: 3, start: "08:00", end: "09:35", weeks: [1, 16], title: "液压传动", detail: "第 1-2 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
+  { id: "wed-afternoon", day: 3, start: "13:30", end: "16:55", weeks: [1, 16], title: "计算机辅助设计 + 制造信息技术", detail: "第 5-8 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
+  { id: "thu-late-morning", day: 4, start: "09:50", end: "11:45", weeks: [1, 16], title: "体育竞赛课 + 公差与测量技术", detail: "第 3-4 节 · 第 1-16 教学周；上午第 1-2 节通常无正式课程。" },
+  { id: "thu-afternoon", day: 4, start: "13:30", end: "16:55", weeks: [1, 16], title: "机械控制工程基础 + 机械设计", detail: "第 5-8 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
+  { id: "fri-morning", day: 5, start: "08:00", end: "11:45", weeks: [1, 16], title: "专业课", detail: "第 1-4 节 · 第 1-16 教学周；课程细项、教室与分组以教务通知为准。" },
+  { id: "fri-late-afternoon", day: 5, start: "15:20", end: "16:55", weeks: [1, 16], title: "专业课", detail: "第 7-8 节 · 第 1-16 教学周；课程细项、教室与分组以教务通知为准。" },
 
   { id: "w4-thu-lab", day: 4, start: "18:30", end: "21:30", weeks: [4], title: "晚实验", detail: "真实课表例外：第 4 教学周周四晚实验；以任课教师通知为准。" },
   { id: "w5-wed-evening", day: 3, start: "19:00", end: "21:25", weeks: [5], title: "晚课", detail: "真实课表例外：第 5 教学周周三晚课；以任课教师通知为准。" },
