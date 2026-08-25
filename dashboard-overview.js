@@ -65,10 +65,6 @@
 
   cards.forEach((card) => card.addEventListener("click", () => {
     const view = card.dataset.view;
-    if (window.matchMedia("(max-width: 1180px)").matches) {
-      app.showView(view);
-      return;
-    }
     if (document.body.dataset.boardOpen === view) {
       app.showView(view);
       return;

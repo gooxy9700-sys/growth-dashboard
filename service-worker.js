@@ -1,4 +1,4 @@
-const CACHE_NAME = "yijishu-v39";
+const CACHE_NAME = "yijishu-v40";
 const ASSETS = ["./", "./index.html", "./styles.css", "./dashboard-overview.js", "./supabase-config.js", "./schedule-data.js", "./plan-data.js", "./app.js", "./pomodoro-enhancements.js", "./health-kit-adapter.js", "./sync.js", "./privacy.html", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {
