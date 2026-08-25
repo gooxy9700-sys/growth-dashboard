@@ -98,6 +98,13 @@
     if (!host) return;
     const start = app.weekStart ? app.weekStart(new Date(day() + "T12:00:00")) : day();
     const base = new Date(start + "T12:00:00");
+    const end = new Date(base); end.setDate(base.getDate() + 6);
+    const context = byId("week-context");
+    if (context) {
+      const month = base.getMonth() === end.getMonth() ? `${base.getFullYear()}年${base.getMonth() + 1}月` : `${base.getFullYear()}年${base.getMonth() + 1}月-${end.getMonth() + 1}月`;
+      const week = Math.max(0, Math.floor((new Date(day() + "T12:00:00") - new Date("2026-08-31T12:00:00")) / 604800000) + 1);
+      context.textContent = week ? `${month} · 第 ${week} 教学周` : `${month} · 非教学周`;
+    }
     host.replaceChildren();
     for (let index = 0; index < 7; index += 1) {
       const date = new Date(base); date.setDate(base.getDate() + index);
@@ -106,7 +113,8 @@
       button.type = "button";
       button.className = "week-day" + (value === day() ? " is-active" : "") + (value === new Date().toISOString().slice(0, 10) ? " is-today" : "");
       button.disabled = Boolean(state.ui.focusMode);
-      button.innerHTML = "<span>周" + ["日", "一", "二", "三", "四", "五", "六"][date.getDay()] + "</span><strong>" + String(date.getDate()).padStart(2, "0") + "</strong>";
+      button.setAttribute("aria-label", `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日，周${["日", "一", "二", "三", "四", "五", "六"][date.getDay()]}`);
+      button.innerHTML = "<span>周" + ["日", "一", "二", "三", "四", "五", "六"][date.getDay()] + "</span><strong>" + String(date.getMonth() + 1).padStart(2, "0") + "/" + String(date.getDate()).padStart(2, "0") + "</strong>";
       button.addEventListener("click", () => { if (state.ui.focusMode) return; state.ui.scheduleDate = value; save(); render(); });
       host.append(button);
     }
@@ -156,7 +164,7 @@
         input.dispatchEvent(new Event("change", { bubbles: true }));
       });
     }
-    if (byId("schedule-date-title")) byId("schedule-date-title").textContent = format(day()) + " · 今日安排";
+    if (byId("schedule-date-title")) { const d = new Date(day() + "T12:00:00"); byId("schedule-date-title").textContent = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 · 今日安排`; }
     if (byId("schedule-empty")) byId("schedule-empty").hidden = items.length > 0;
     customRenderProgress();
   }

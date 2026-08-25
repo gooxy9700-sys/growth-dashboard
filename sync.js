@@ -6,6 +6,7 @@
   let realtimeChannel = null;
   let authMode = "login";
   let reconcilePromise = null;
+  let pendingRemote = null;
 
   const $ = (id) => document.getElementById(id);
   const app = () => window.YIJISHU_APP;
@@ -16,6 +17,21 @@
   const setStatus = (text) => { $("sync-status").textContent = text; };
   const toast = (text) => app()?.showToast?.(text);
   const loadScript = (src) => new Promise((resolve, reject) => { const script = document.createElement("script"); script.src = src; script.onload = resolve; script.onerror = reject; document.head.append(script); });
+  const isEditing = () => { const active = document.activeElement; return Boolean(document.querySelector("dialog[open]") || active?.matches("input, textarea, select, [contenteditable=true]")); };
+  function applyRemote(remote) {
+    if (isEditing()) { pendingRemote = remote; setStatus("更新将在编辑后同步"); return; }
+    app().replaceState(remote, { preserveUi: true, preserveViewport: true });
+    setStatus("已同步");
+  }
+  function applyPendingRemote() {
+    if (!pendingRemote || isEditing()) return;
+    const remote = pendingRemote;
+    pendingRemote = null;
+    const localTime = Number(app().getState().meta?.updatedAt || 0);
+    const remoteTime = Number(remote.meta?.updatedAt || 0);
+    if (remoteTime > localTime) applyRemote(remote);
+    else setStatus("已同步");
+  }
 
   function openAuth() { $("auth-dialog").showModal(); updateAuthUi(); }
   function updateAuthUi() {
@@ -52,7 +68,7 @@
     const remote = data?.payload;
     const localTime = Number(local.meta?.updatedAt || 0);
     const remoteTime = Number(remote?.meta?.updatedAt || (data?.updated_at ? Date.parse(data.updated_at) : 0));
-    if (remote && remoteTime > localTime) { app().replaceState(remote); setStatus("已同步"); toast("已载入其他设备的较新记录"); return; }
+    if (remote && remoteTime > localTime) { applyRemote(remote); return; }
     if (!remote || localTime > remoteTime) await syncNow();
     else setStatus("已同步");
     })();
@@ -67,7 +83,7 @@
       if (!remote) return;
       const localTime = Number(app().getState().meta?.updatedAt || 0);
       const remoteTime = Number(remote.meta?.updatedAt || (payload.new?.updated_at ? Date.parse(payload.new.updated_at) : 0));
-      if (remoteTime > localTime) { app().replaceState(remote); setStatus("已实时同步"); toast("其他设备的数据已更新"); }
+      if (remoteTime > localTime) applyRemote(remote);
     }).subscribe();
   }
   async function handleAuthSubmit(event) {
@@ -95,7 +111,11 @@
     $("auth-signout").addEventListener("click", async () => { clearRealtime(); await client?.auth.signOut(); $("auth-dialog").close(); });
     window.addEventListener("online", pullOrPush);
     window.addEventListener("focus", pullOrPush);
+    window.addEventListener("pointerdown", applyPendingRemote, true);
+    window.addEventListener("keydown", applyPendingRemote, true);
     document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") pullOrPush(); });
+    document.addEventListener("focusout", () => window.setTimeout(applyPendingRemote, 0));
+    document.querySelectorAll("dialog").forEach((dialog) => dialog.addEventListener("close", () => window.setTimeout(applyPendingRemote, 0)));
     window.addEventListener("yijishu:statechange", scheduleSync);
     if (!configReady()) { setStatus("本地保存"); $("auth-hint").textContent = "未配置 Supabase 时，数据只保存在本机。"; return; }
     try { if (!window.supabase) await loadScript(CDN); client = window.supabase.createClient(window.SUPABASE_CONFIG.url, window.SUPABASE_CONFIG.publishableKey); } catch { setStatus("本地保存"); toast("Supabase 客户端加载失败，继续使用本地模式"); return; }

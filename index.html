@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0f766e">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=21">
+  <link rel="stylesheet" href="styles.css?v=22">
   <title>与己书 · 自律成长工具</title>
 </head>
 <body>
@@ -24,7 +24,7 @@
       <section id="tasks-view" class="view is-visible" aria-labelledby="tasks-title">
         <div class="view-heading dashboard-heading"><div><p class="eyebrow">考研成长自律看板</p><h1 id="tasks-title">今日安排</h1><strong id="mobile-day-title" class="mobile-day-title">第 0 周 周一</strong></div><div class="heading-actions"><button id="new-task-button" class="primary-button" type="button" aria-label="新增弹性事项"><span class="new-task-plus" aria-hidden="true">+</span><span class="new-task-label">新增弹性事项</span></button></div></div>
         <section class="mobile-day-status" aria-live="polite"><div class="mobile-status-mark" aria-hidden="true">✓</div><div><strong id="mobile-day-status">今日待完成</strong><span id="mobile-day-count">正在整理今天的个人课程</span></div></section>
-        <section class="week-strip panel" aria-label="周日期导航"><button id="week-prev" class="week-nav-button" type="button" aria-label="上一周">‹</button><div id="week-days" class="week-days"></div><button id="week-next" class="week-nav-button" type="button" aria-label="下一周">›</button><button id="week-today" class="week-today-button" type="button">今天</button></section>
+        <section class="week-strip panel" aria-label="周日期导航"><h2 id="week-context" class="week-context">2026年8月 · 第 0 教学周</h2><button id="week-prev" class="week-nav-button" type="button" aria-label="上一周">‹</button><div id="week-days" class="week-days"></div><button id="week-next" class="week-nav-button" type="button" aria-label="下一周">›</button><button id="week-today" class="week-today-button" type="button">今天</button></section>
         <section class="weekly-progress" aria-label="本周进度"><article class="module-progress module-progress-total"><div><span>本周完成</span><strong id="week-total-progress">0%</strong></div><div class="progress-track"><i id="week-total-bar"></i></div><small id="week-total-count">0 / 0 项</small></article><article class="module-progress"><div><span>数学</span><strong id="week-math-progress">0%</strong></div><div class="progress-track"><i id="week-math-bar"></i></div></article><article class="module-progress"><div><span>英语</span><strong id="week-english-progress">0%</strong></div><div class="progress-track"><i id="week-english-bar"></i></div></article><article class="module-progress"><div><span>运动</span><strong id="week-sport-progress">0%</strong></div><div class="progress-track"><i id="week-sport-bar"></i></div></article></section>
         <section class="schedule-panel panel"><div class="panel-heading"><div><p class="eyebrow">今日个人课程</p><h2 id="schedule-date-title">07:00 - 23:30</h2></div><div class="schedule-heading-meta"><div id="completion-ring" class="completion-ring" role="img" aria-label="当日完成率 0%"><span id="completion-ring-value">0%</span></div><span id="schedule-completion" class="status-pill">完成率 0%</span></div></div><div id="schedule-list" class="schedule-list" aria-label="今日个人课程"></div><div id="schedule-empty" class="schedule-empty" hidden><div class="empty-mark" aria-hidden="true">✓</div><strong>今天没有安排，享受放松吧</strong><span>选择其他日期，或者新增一个弹性事项。</span></div></section>
         <section class="panel note-panel"><div class="panel-heading"><div><p class="eyebrow">今日备注复盘</p><h2>把问题留下来</h2></div><span class="quiet-copy">自动保存</span></div><textarea id="daily-note" rows="5" placeholder="错题记录、待办补充、复盘总结……"></textarea></section>
@@ -54,9 +54,9 @@
   <script src="supabase-config.js?v=1" defer></script>
   <script src="schedule-data.js?v=6" defer></script>
   <script src="plan-data.js?v=1" defer></script>
-  <script src="app.js?v=22" defer></script>
-  <script src="pomodoro-enhancements.js?v=11" defer></script>
+  <script src="app.js?v=24" defer></script>
+  <script src="pomodoro-enhancements.js?v=12" defer></script>
   <script src="health-kit-adapter.js?v=1" defer></script>
-  <script src="sync.js?v=3" defer></script>
+  <script src="sync.js?v=5" defer></script>
 </body>
 </html>
