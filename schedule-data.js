@@ -57,20 +57,36 @@ const EXCEL_DAILY_SCHEDULE = {
   0: [["09:30","10:20","周复盘与下周排程","review",false,"Excel/PWA + 纸笔 · 看完成率、错题、体重和训练"],["10:30","12:00","课内薄弱课程复习","course",false,"教材/平板/AI 复盘 · 写补救动作和截止日期"],["15:00","16:30","单一补块","review",false,"按任务选择 · 只补一件，不清空式补债"],["19:30","20:30","英语写作 / 材料力学轮换","english",false,"MatePad/纸笔 · 隔周轮换"]]
 };
 
-// 真实秋季课表：扫描课表已核验的上课节次与教学周。
-// 教室、分组实验和晚间例外仍以教务系统与教师通知为准。
+// 真实秋季课表：2026-2027-1 学期教务系统课表同步。
 const AUTUMN_COURSE_SCHEDULE = [
-  { id: "mon-morning", day: 1, start: "08:00", end: "09:35", weeks: [1, 16], title: "液压传动 + 创业基础", detail: "第 1-2 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
-  { id: "mon-afternoon", day: 1, start: "13:30", end: "16:55", weeks: [1, 16], title: "机械设计", detail: "第 5-8 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
-  { id: "tue-morning", day: 2, start: "08:00", end: "11:45", weeks: [1, 16], title: "机械控制工程基础 + 公差与测量技术", detail: "第 1-4 节 · 第 1-16 教学周；下午通常无正式课程。" },
-  { id: "wed-morning", day: 3, start: "08:00", end: "09:35", weeks: [1, 16], title: "液压传动", detail: "第 1-2 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
-  { id: "wed-afternoon", day: 3, start: "13:30", end: "16:55", weeks: [1, 16], title: "计算机辅助设计 + 制造信息技术", detail: "第 5-8 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
-  { id: "thu-late-morning", day: 4, start: "09:50", end: "11:45", weeks: [1, 16], title: "体育竞赛课 + 公差与测量技术", detail: "第 3-4 节 · 第 1-16 教学周；上午第 1-2 节通常无正式课程。" },
-  { id: "thu-afternoon", day: 4, start: "13:30", end: "16:55", weeks: [1, 16], title: "机械控制工程基础 + 机械设计", detail: "第 5-8 节 · 第 1-16 教学周；教室与分组以教务通知为准。" },
-  { id: "fri-morning", day: 5, start: "08:00", end: "11:45", weeks: [1, 16], title: "专业课", detail: "第 1-4 节 · 第 1-16 教学周；课程细项、教室与分组以教务通知为准。" },
-  { id: "fri-late-afternoon", day: 5, start: "15:20", end: "16:55", weeks: [1, 16], title: "专业课", detail: "第 7-8 节 · 第 1-16 教学周；课程细项、教室与分组以教务通知为准。" },
+  { id: "mon-tolerance-lab", day: 1, start: "19:00", end: "20:35", weeks: [7, 8], title: "公差与技术测量", detail: "第 10-11 节 · 机械制造室 1 科 703 · 上课组 1。" },
+  { id: "mon-material", day: 1, start: "15:20", end: "16:55", weeks: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13], title: "工程材料与成型技术", detail: "第 7-8 节 · 教 416。" },
+  { id: "mon-design", day: 1, start: "13:30", end: "15:05", weeks: [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13], title: "机械设计", detail: "第 5-6 节 · 教 417。" },
+  { id: "mon-test", day: 1, start: "09:55", end: "11:30", weeks: [9, 10, 11, 12, 13, 14, 15, 16], title: "机械工程测试技术", detail: "第 3-4 节 · 教 416。" },
+  { id: "mon-hydraulic", day: 1, start: "08:00", end: "09:35", weeks: [1, 2, 3, 4, 5, 7, 8], title: "液压传动与控制", detail: "第 1-2 节 · 教 106。" },
 
-  { id: "w4-thu-lab", day: 4, start: "18:30", end: "21:30", weeks: [4], title: "晚实验", detail: "真实课表例外：第 4 教学周周四晚实验；以任课教师通知为准。" },
-  { id: "w5-wed-evening", day: 3, start: "19:00", end: "21:25", weeks: [5], title: "晚课", detail: "真实课表例外：第 5 教学周周三晚课；以任课教师通知为准。" },
-  { id: "w6-fri-evening", day: 5, start: "19:00", end: "21:25", weeks: [6], title: "晚课", detail: "真实课表例外：第 6 教学周周五晚课；以任课教师通知为准。" }
+  { id: "tue-hydraulic-lab-full", day: 2, start: "13:30", end: "16:55", weeks: [7], title: "液压传动与控制", detail: "第 5-8 节 · 液压传动室实验。" },
+  { id: "tue-hydraulic-lab", day: 2, start: "13:30", end: "15:05", weeks: [5], title: "液压传动与控制", detail: "第 5-6 节 · 液压传动室实验。" },
+  { id: "tue-tolerance", day: 2, start: "09:55", end: "11:30", weeks: [1, 2, 3, 4, 5, 7, 8], title: "公差与技术测量", detail: "第 3-4 节 · 教 415。" },
+  { id: "tue-control", day: 2, start: "08:00", end: "09:35", weeks: [1, 2, 3, 4, 5, 7, 8, 9, 10], title: "机械控制工程基础", detail: "第 1-2 节 · 理 209。" },
+
+  { id: "wed-control-lab-full", day: 3, start: "19:00", end: "21:25", weeks: [5, 8], title: "机械控制工程基础", detail: "第 10-12 节 · 控制工程室实验 · 上课组 1。" },
+  { id: "wed-control-lab", day: 3, start: "19:00", end: "20:35", weeks: [7], title: "机械控制工程基础", detail: "第 10-11 节 · 控制工程室实验 · 上课组 1。" },
+  { id: "wed-material-lab", day: 3, start: "13:30", end: "16:55", weeks: [11], title: "工程材料与成型技术", detail: "第 5-8 节 · 沙教 4-109、115、202 实验 · 上课组 1。" },
+  { id: "wed-information", day: 3, start: "15:20", end: "16:55", weeks: [1, 2, 3, 4, 5, 7, 8, 9, 10], title: "制造工程信息技术", detail: "第 7-8 节 · 教 416。" },
+  { id: "wed-cadcam", day: 3, start: "13:30", end: "15:05", weeks: [1, 2, 3, 4, 5, 7, 8, 9, 10], title: "计算机辅助设计与制造", detail: "第 5-6 节 · 教 103。" },
+  { id: "wed-test-lab-full", day: 3, start: "08:00", end: "11:30", weeks: [16], title: "机械工程测试技术", detail: "第 1-4 节 · 机械制造室 1 科 703 实验 · 上课组 1。" },
+  { id: "wed-test-lab", day: 3, start: "09:55", end: "11:30", weeks: [14, 15], title: "机械工程测试技术", detail: "第 3-4 节 · 机械制造室 1 科 703 实验 · 上课组 1。" },
+  { id: "wed-hydraulic", day: 3, start: "08:00", end: "09:35", weeks: [1, 2, 3, 4, 5, 7], title: "液压传动与控制", detail: "第 1-2 节 · 教 106。" },
+
+  { id: "thu-sport", day: 4, start: "08:00", end: "09:35", weeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16], title: "体育竞赛课", detail: "第 1-2 节 · 第 1-16 教学周。" },
+  { id: "thu-design-lab", day: 4, start: "18:30", end: "21:30", weeks: [4, 7, 9, 10], title: "机械设计实验", detail: "第 10-12 节 · 机械原理室 1 科 705 · 上课组 1。" },
+  { id: "thu-design", day: 4, start: "15:20", end: "16:55", weeks: [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13], title: "机械设计", detail: "第 7-8 节 · 教 417。" },
+  { id: "thu-test", day: 4, start: "13:30", end: "15:05", weeks: [9, 10, 11, 12, 13, 14, 15, 16], title: "机械工程测试技术", detail: "第 5-6 节 · 教 416。" },
+  { id: "thu-control", day: 4, start: "13:30", end: "15:05", weeks: [1, 2, 3, 4, 6, 7, 8], title: "机械控制工程基础", detail: "第 5-6 节 · 理 206。" },
+  { id: "thu-tolerance", day: 4, start: "09:55", end: "11:30", weeks: [1, 2, 3, 4, 6, 7, 8], title: "公差与技术测量", detail: "第 3-4 节 · 教 415。" },
+
+  { id: "fri-information", day: 5, start: "15:20", end: "16:55", weeks: [1, 2, 3, 6, 7, 8, 9], title: "制造工程信息技术", detail: "第 7-8 节 · 教 416。" },
+  { id: "fri-cadcam", day: 5, start: "09:55", end: "11:30", weeks: [1, 2, 3, 6, 7, 8, 9], title: "计算机辅助设计与制造", detail: "第 3-4 节 · 教 103。" },
+  { id: "fri-material", day: 5, start: "08:00", end: "09:35", weeks: [1, 2, 3, 6, 7, 8, 9, 10, 11, 12], title: "工程材料与成型技术", detail: "第 1-2 节 · 教 416。" }
 ];
