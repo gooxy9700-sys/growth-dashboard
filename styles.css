@@ -135,6 +135,14 @@ body[data-current-view="tasks"] .dashboard-overview{margin-top:0}
 
 /* Desktop-only expandable board. Touch layouts stay on the existing compact grid until the desktop art direction is approved. */
 @media(min-width:1181px){
+  .app-shell:has(#tasks-view.is-visible) .sidebar{display:none}
+  .app-shell:has(#tasks-view.is-visible) .workspace{display:block}
+  .app-shell:has(#tasks-view.is-visible) #tasks-view{max-width:1400px;margin:0 auto}
+  .app-shell:has(#tasks-view.is-visible) .dashboard-overview{grid-template-columns:minmax(620px,2.8fr) repeat(4,minmax(76px,.48fr))}
+  .app-shell:has(#tasks-view.is-visible) .dashboard-overview:has(.board-module-focus.is-current){grid-template-columns:minmax(76px,.48fr) minmax(620px,2.8fr) repeat(3,minmax(76px,.48fr))}
+  .app-shell:has(#tasks-view.is-visible) .dashboard-overview:has(.board-module-run.is-current){grid-template-columns:repeat(2,minmax(76px,.48fr)) minmax(620px,2.8fr) repeat(2,minmax(76px,.48fr))}
+  .app-shell:has(#tasks-view.is-visible) .dashboard-overview:has(.board-module-gym.is-current){grid-template-columns:repeat(3,minmax(76px,.48fr)) minmax(620px,2.8fr) minmax(76px,.48fr)}
+  .app-shell:has(#tasks-view.is-visible) .dashboard-overview:has(.board-module-stats.is-current){grid-template-columns:repeat(4,minmax(76px,.48fr)) minmax(620px,2.8fr)}
   body[data-current-view="tasks"] .dashboard-overview{grid-template-columns:minmax(620px,2.8fr) repeat(4,minmax(76px,.48fr));gap:8px;min-height:216px;transition:grid-template-columns 360ms cubic-bezier(.2,.8,.2,1)}
   body[data-current-view="tasks"] .dashboard-overview:has(.board-module-focus.is-current){grid-template-columns:minmax(76px,.48fr) minmax(620px,2.8fr) repeat(3,minmax(76px,.48fr))}
   body[data-current-view="tasks"] .dashboard-overview:has(.board-module-run.is-current){grid-template-columns:repeat(2,minmax(76px,.48fr)) minmax(620px,2.8fr) repeat(2,minmax(76px,.48fr))}
@@ -142,6 +150,9 @@ body[data-current-view="tasks"] .dashboard-overview{margin-top:0}
   body[data-current-view="tasks"] .dashboard-overview:has(.board-module-stats.is-current){grid-template-columns:repeat(4,minmax(76px,.48fr)) minmax(620px,2.8fr)}
   .dashboard-overview .board-module{min-height:216px;padding:18px 16px;border-radius:12px;grid-template-rows:auto auto 1fr auto;align-content:stretch;transition:min-height 320ms ease,transform 220ms ease,box-shadow 220ms ease,filter 220ms ease}
   .dashboard-overview .board-module:not(.is-current){min-height:216px;padding:18px 10px;justify-items:center;align-content:center;filter:saturate(.78)}
+  .dashboard-overview .board-module-facts{display:flex;gap:8px;align-items:center;margin-top:auto;padding-top:14px}
+  .dashboard-overview .board-module-facts span{padding:7px 10px;border:1px solid rgba(62,70,67,.18);border-radius:5px;background:rgba(255,255,255,.2);font-size:12px;color:rgba(62,70,67,.78);white-space:nowrap}
+  .dashboard-overview .board-module:not(.is-current) .board-module-facts{display:none}
   .dashboard-overview .board-module:not(.is-current) .board-module-kicker,.dashboard-overview .board-module:not(.is-current) span:not(.board-module-kicker),.dashboard-overview .board-module:not(.is-current) b,.dashboard-overview .board-module:not(.is-current) .board-module-detail,.dashboard-overview .board-module:not(.is-current) .board-module-mark{display:none}
   .dashboard-overview .board-module:not(.is-current) strong{font-size:16px;white-space:nowrap;writing-mode:vertical-rl;letter-spacing:.08em}
   .dashboard-overview .board-module.is-current{padding:20px 22px;border-color:rgba(62,70,67,.42);box-shadow:0 12px 26px rgba(62,70,67,.14),inset 0 -4px rgba(62,70,67,.24);transform:translateY(-2px)}

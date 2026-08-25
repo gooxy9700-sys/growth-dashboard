@@ -20,12 +20,13 @@
     const taskRate = tasks.length ? Math.round(taskDone / tasks.length * 100) : completion;
     const values = {"board-today-value": String(completion) + "%", "board-today-meta": items.length ? done + " / " + items.length + " 项已完成" : "今天还没有安排", "board-focus-value": focusMinutes + " 分钟", "board-run-value": runKm.toFixed(1) + " / 60 km", "board-gym-value": gymCount + " 次", "board-stats-value": String(taskRate) + "%"};
     Object.entries(values).forEach(([id, value]) => { const node = byId(id); if (node) node.textContent = value; });
+    const facts = {tasks: [items.length + " 个日程", done + " 项完成", "今日课程"], focus: [focusMinutes + " 分钟", (state.focusSessions || []).filter((item) => item.date === today()).length + " 个番茄", "专注记录"], run: [runKm.toFixed(1) + " km", "目标 60 km", (state.runs || []).filter((item) => item.date >= date).length + " 次记录"], gym: [gymCount + " 次", (state.workouts || []).length + " 次累计", "训练档案"], stats: [String(taskRate) + "%", tasks.length + " 项任务", "本日结构"]};
+    Object.entries(facts).forEach(([view, entries]) => { const node = document.querySelector("[data-facts-for=\"" + view + "\"]"); if (node) node.replaceChildren(...entries.map((entry) => { const span = document.createElement("span"); span.textContent = entry; return span; })); });
   }
 
   function setCurrent(view) {
     cards.forEach((card) => card.classList.toggle("is-current", card.dataset.view === view));
     document.body.dataset.boardOpen = view;
-    document.body.dataset.currentView = view;
     cards.forEach((card) => card.setAttribute("aria-expanded", card.dataset.view === view ? "true" : "false"));
   }
 
@@ -54,6 +55,10 @@
         if (view === "tasks") byId("schedule-panel")?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
       detail.append(description, action);
+      const facts = document.createElement("div");
+      facts.className = "board-module-facts";
+      facts.dataset.factsFor = view;
+      detail.before(facts);
       card.append(detail);
     });
   }
@@ -64,7 +69,7 @@
       app.showView(view);
       return;
     }
-    if (document.body.dataset.currentView === view) {
+    if (document.body.dataset.boardOpen === view) {
       app.showView(view);
       return;
     }
@@ -72,8 +77,9 @@
   }));
   document.querySelectorAll(".nav-button[data-view]").forEach((button) => button.addEventListener("click", () => setCurrent(button.dataset.view), true));
   const baseShowView = app.showView;
-  app.showView = (view) => { const result = baseShowView(view); setCurrent(view); refresh(); return result; };
+  app.showView = (view) => { const result = baseShowView(view); document.body.dataset.currentView = view; setCurrent(view); refresh(); return result; };
   ensureDetails();
+  document.body.dataset.currentView = "tasks";
   refresh();
   setCurrent("tasks");
   window.setInterval(refresh, 30000);
