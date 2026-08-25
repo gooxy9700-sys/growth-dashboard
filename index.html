@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0f766e">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=23">
+  <link rel="stylesheet" href="styles.css?v=24">
   <title>与己书 · 自律成长工具</title>
 </head>
 <body>
@@ -23,6 +23,13 @@
 
       <section id="tasks-view" class="view is-visible" aria-labelledby="tasks-title">
         <div class="view-heading dashboard-heading"><div><p class="eyebrow">考研成长自律看板</p><h1 id="tasks-title">今日安排</h1><strong id="mobile-day-title" class="mobile-day-title">第 0 周 周一</strong></div><div class="heading-actions"><button id="new-task-button" class="primary-button" type="button" aria-label="新增弹性事项"><span class="new-task-plus" aria-hidden="true">+</span><span class="new-task-label">新增弹性事项</span></button></div></div>
+        <section class="dashboard-overview" aria-label="功能总览">
+          <button class="board-module board-module-today is-current" data-view="tasks" type="button"><span class="board-module-kicker">TODAY</span><strong>今日任务</strong><span id="board-today-meta">课程与清单</span><b id="board-today-value">0%</b><i class="board-module-mark" aria-hidden="true"></i></button>
+          <button class="board-module board-module-focus" data-view="focus" type="button"><span class="board-module-kicker">FOCUS</span><strong>番茄专注</strong><span>今天的专注时间</span><b id="board-focus-value">0 分钟</b><i class="board-module-mark" aria-hidden="true"></i></button>
+          <button class="board-module board-module-run" data-view="run" type="button"><span class="board-module-kicker">MOVE</span><strong>校园跑</strong><span>学期累计目标</span><b id="board-run-value">0 / 60 km</b><i class="board-module-mark" aria-hidden="true"></i></button>
+          <button class="board-module board-module-gym" data-view="gym" type="button"><span class="board-module-kicker">TRAIN</span><strong>健身记录</strong><span>今日训练次数</span><b id="board-gym-value">0 次</b><i class="board-module-mark" aria-hidden="true"></i></button>
+          <button class="board-module board-module-stats" data-view="stats" type="button"><span class="board-module-kicker">REVIEW</span><strong>数据统计</strong><span>本周完成结构</span><b id="board-stats-value">0%</b><i class="board-module-mark" aria-hidden="true"></i></button>
+        </section>
         <section class="mobile-day-status" aria-live="polite"><div class="mobile-status-mark" aria-hidden="true">✓</div><div><strong id="mobile-day-status">今日待完成</strong><span id="mobile-day-count">正在整理今天的个人课程</span></div></section>
         <section class="week-strip panel" aria-label="周日期导航"><h2 id="week-context" class="week-context">2026年8月 · 第 0 教学周</h2><button id="week-prev" class="week-nav-button" type="button" aria-label="上一周">‹</button><div id="week-days" class="week-days"></div><button id="week-next" class="week-nav-button" type="button" aria-label="下一周">›</button><button id="week-today" class="week-today-button" type="button">今天</button></section>
         <section class="weekly-progress" aria-label="本周进度"><article class="module-progress module-progress-total"><div><span>本周完成</span><strong id="week-total-progress">0%</strong></div><div class="progress-track"><i id="week-total-bar"></i></div><small id="week-total-count">0 / 0 项</small></article><article class="module-progress"><div><span>数学</span><strong id="week-math-progress">0%</strong></div><div class="progress-track"><i id="week-math-bar"></i></div></article><article class="module-progress"><div><span>英语</span><strong id="week-english-progress">0%</strong></div><div class="progress-track"><i id="week-english-bar"></i></div></article><article class="module-progress"><div><span>运动</span><strong id="week-sport-progress">0%</strong></div><div class="progress-track"><i id="week-sport-bar"></i></div></article></section>
@@ -55,6 +62,7 @@
   <script src="schedule-data.js?v=6" defer></script>
   <script src="plan-data.js?v=1" defer></script>
   <script src="app.js?v=24" defer></script>
+  <script src="dashboard-overview.js?v=2" defer></script>
   <script src="pomodoro-enhancements.js?v=12" defer></script>
   <script src="health-kit-adapter.js?v=1" defer></script>
   <script src="sync.js?v=5" defer></script>
